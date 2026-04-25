@@ -96,14 +96,12 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 
 	@Override
 	public E removeFirst() {
-		// TODO 
-		return null;
+		return remove(front.getElement());
 	}
 
 	@Override
 	public E removeLast() {
-		// TODO 
-		return null;
+		return remove(rear.getElement());
 	}
 
 	@Override
@@ -125,26 +123,63 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 
 	@Override
 	public E remove(int index) {
-		// TODO 
-		return null;
+		if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		LinearNode<E> current = front; previous = null;
+		E result = null;
+		if (index == 0) {
+			front = current.getNext();
+			result = current.getElement();
+		} else {
+			while (index != 0) {
+				previous = current;
+				current = current.getNext();
+			}
+			if (index == size()) {
+				previous.setNext(null);
+				result = previous.getElement();
+			} else {
+				previous.setNext(current.getNext());
+				result = current.getElement();
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public void set(int index, E element) {
-		// TODO 
-		
+		if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		LinearNode<E> current = front;
+		int i = 0;
+		while (i != index) {
+			current = current.getNext();
+			i++;
+		}
+		current.setElement(element);
 	}
 
 	@Override
 	public E get(int index) {
-		// TODO 
+		if (index < 0 || index > size()) throw new IndexOutOfBoundsException();
+		LinearNode<E> current = front;
+		for (int i = 0; i < size(); i++) {
+			if (i == index) {
+				return current.getElement();
+			}
+			current.getNext();
+		}
 		return null;
 	}
 
 	@Override
 	public int indexOf(E element) {
-		// TODO 
-		return 0;
+		if (isEmpty()) throw new NoSuchElementException();
+		LinearNode<E> current = front;
+		for (int i = 0; i < size(); i++) {
+			if (current.getElement.equals(element)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	@Override
@@ -159,7 +194,13 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 
 	@Override
 	public boolean contains(E target) {
-		// TODO 
+		LinearNode<E> current = front;
+		while (current != null) {
+			if (current.getElement().equals(target)) {
+				return true;
+			}
+			current = current.getNext();
+		}
 		return false;
 	}
 
