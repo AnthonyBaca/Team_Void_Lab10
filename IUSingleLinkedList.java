@@ -116,7 +116,15 @@ public class IUSingleLinkedList<E> implements IndexedUnsortedList<E> {
 	public E remove(int index) {
 		if (index < 0 || index >= size()) throw new IndexOutOfBoundsException();
 
-		return remove(get(index));
+		LinearNode<E> current = front;
+		LinearNode<E> previous = null;
+
+		for (int i = 0; i < index; i++) {
+			previous = current;
+			current = current.getNext();
+		}
+
+		return removeElement(previous, current);
 	}
 
 	@Override
